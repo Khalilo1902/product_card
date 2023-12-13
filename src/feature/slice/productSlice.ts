@@ -5,8 +5,9 @@ import {
   createEntityAdapter,
   createSlice,
 } from "@reduxjs/toolkit";
-import { getAllProducts } from "../services";
+import { CreateProduct, getAllProducts } from "../services";
 import { RootState } from "../store/store";
+
 
 interface IProductState {
   status: "idle" | "loading" | "completed" | "failed";
@@ -36,6 +37,13 @@ export const fetchAllProducts = createAsyncThunk(
     return response.data;
   }
 );
+export const createApiProduct = createAsyncThunk(
+  "/products/createApiProduct",
+  async(initialProduct:IProducts) => {
+   const response = await CreateProduct(initialProduct)
+   return response.data
+  }
+);
 
 const productSlice = createSlice({
   name: "products",
@@ -60,7 +68,11 @@ const productSlice = createSlice({
       .addCase(fetchAllProducts.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "is Accourded ";
-      });
+      })
+      .addCase(createApiProduct.fulfilled, (state, _) => {
+        state.status = "completed";
+        productAdapter.addOne;
+      })
   },
 });
 

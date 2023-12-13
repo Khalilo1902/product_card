@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <ProviderToolkit>
       <html lang="en">
-        <body className={`${inter.className} bg-gray-300`}>
+        <body suppressHydrationWarning={true} className={`${inter.className} bg-gray-300`}>
           <nav className=" bg-slate-700 text-white font-bold">
             <Nav />
           </nav>
